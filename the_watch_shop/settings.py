@@ -33,7 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'user_home.CustomUser'
-LOCAL = config('LOCAL', cast = bool)
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user_home.apps.UserHomeConfig',
-    'whitenoise.runserver_nostatic',
     'admin_home.apps.AdminHomeConfig',
     'products.apps.ProductsConfig',
     'categories.apps.CategoriesConfig',
@@ -53,7 +51,6 @@ INSTALLED_APPS = [
     'user_profile',
     'wishlist',
     'offers',
-    'storages',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +61,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'the_watch_shop.urls'
@@ -168,30 +164,12 @@ TWILIO_PHONE_NUMBER = config('TWILIO_PHONE_NUMBER')
 AUTHENTICATION_BACKENDS = [ 'user_home.otp_backend.PhoneOTPBackend', 'django.contrib.auth.backends.ModelBackend',]
 
 
-if LOCAL:
-    #media
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'photos')
-    MEDIA_URL = '/media/'
-
-
-else:
-    AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = 'thewatchstore'
-    AWS_S3_SIGNATURE_NAME = 's3v4',
-    AWS_S3_REGION_NAME = 'eu-north-1'
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_DEFAULT_ACL =  None
-    AWS_S3_VERITY = True
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'photos')
+MEDIA_URL = '/media/'
 
 
 
-    MEDIA_LOCATION = 'media'
-
-    MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{MEDIA_LOCATION}/'
-    MEDIA_ROOT = None
-    MEDIA_FILE_STORAGE = S3Boto3Storage(location=MEDIA_LOCATION)
 
     ######
     # AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
