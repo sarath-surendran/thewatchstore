@@ -1,0 +1,80 @@
+{% extends 'admin/admin_base.html' %}
+{% load static %}
+{% block 'content' %}
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-8 align-self-center">
+                <h3 class="page-title mb-0 p-0">Products</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Products</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+        <div class="container-fluid">
+           <!-- <form action="{% url 'edit_product_save' %}" method="POST">
+            {% csrf_token %}
+            <label for="product_name">Product Name</label>
+            <input type="text" name="product_name" value="{{product.name}}"><br>
+            <label for="product_name">Product Image</label>
+            <input type="file" name="product_image" value="{{product.image}}"><br>
+            <label for="product_name">Brand</label>
+            <input type="text" name="product_brand" value="{{product.brand}}"><br>
+            <label for="product_name">MRP</label>
+            <input type="text" name="product_mrp" value="{{product.mrp}}"><br>
+            <label for="product_name">Selling Price</label>
+            <input type="text" name="product_selling_price" value="{{product.selling_price}}"><br>
+            <label for="product_name">Quantity</label>
+            <input type="text" name="product_quantity" value="{{product.quantity}}"><br>
+            <label for="categories">Categories:</label>
+            <select multiple id="categories" name="categories">
+                {% for category in categories %}
+                  <option value="{{ category.name }}" {% if category in product.categories.all %}selected{% endif %}>
+                    {{ category.name }}
+                  </option>
+                  
+                {% endfor %}
+              </select><br>
+
+            <input type="hidden" name="product_id" value="{{product.id}}">
+            <button class="btn btn-primary">Submit</button>
+           </form> -->
+           <form method="post" action="{% url 'edit_product_save' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ productform.as_p }}
+            <!-- <select name="variations" >
+                <option value="">Choose</option>
+                {% for variation in variations %}
+                    <option value="">{{variation.variation_value}}</option>
+                {% endfor %}
+            </select> -->
+            <!-- {% for variation in variations %}
+                <label>
+                    <input type="checkbox" name="variation" value="{{ variation.id }}" {% if variation in product.variation_set.all %}checked{% endif %}>
+                    {{ variation.variation_value }}
+                </label>
+            {% endfor %} -->
+            {{variationform.as_p}}
+
+            <input type="hidden" name="product_id" value="{{product.id}}">
+            <button type="submit">Save</button>
+        </form>
+        </div>
+    
+    
+    {% endblock %}
+        

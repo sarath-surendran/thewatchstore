@@ -1,0 +1,71 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block 'content' %}
+    <main>
+       <div class="whole-wrap">
+         <div class="container box_1170">
+            <form class="row contact_form" action="{% url 'add_address' %}" method="post">
+                {% csrf_token %}
+                
+                <div class="col-md-6 form-group p_star">
+                    <!-- <input type="text" class="form-control" id="first" name="name" /> -->
+                    <label class="label">First Name</label>
+                    {{form.first_name}}
+                    <!-- <span class="placeholder" data-placeholder="First name"></span> -->
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <!-- <input type="text" class="form-control" id="last" name="name" /> -->
+                    <label class="label">Last Name</label>
+                    {{form.last_name}}
+                    <!-- <span class="placeholder" data-placeholder="Last name"></span> -->
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <label class="label">Phone</label>
+                    {{form.phone}}
+                    <!-- <span class="placeholder" data-placeholder="Phone number"></span> -->
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <label class="label">Email</label>
+                    {{form.email}}
+                    <!-- <span class="placeholder" data-placeholder="Email Address"></span> -->
+                </div>
+                <div class="col-md-12 form-group p_star">
+                    <label class="label">Address Line 1</label>
+                    {{form.address_line_1}}
+                    <!-- <span class="placeholder" data-placeholder="Address line 01"></span> -->
+                </div>
+                <div class="col-md-12 form-group p_star">
+                    <label class="label">Address Line 2</label>
+                    {{form.address_line_2}}
+                    <!-- <span class="placeholder" data-placeholder="Address line 02"></span> -->
+                </div>
+                <div class="col-md-12 form-group p_star">
+                    <label class="label">City</label>
+                    {{form.city}}
+                    <!-- <span class="placeholder" data-placeholder="City"></span> -->
+                </div>
+                <div class="col-md-12 form-group p_star">
+                    <label class="label">State</label>
+                    {{form.state}}
+                    <!-- <span class="placeholder" data-placeholder="State"></span> -->
+                </div>
+                <div class="col-md-12 form-group p_star">
+                    <label class="label">Country</label>
+                    {{form.country}}
+                    <!-- <span class="placeholder" data-placeholder="Country"></span> -->
+                </div>
+                <div class="col-md-12 form-group p_star">
+                    <label class="label">Pincode</label>
+                    {{form.pincode}}
+                    <!-- <span class="placeholder" data-placeholder="Postcode/ZIP"></span> -->
+                </div>
+                <button class="btn_3" type="submit">Add Address</button>
+                </form>
+         </div>
+       </div>
+            
+            
+        
+        <!--================End Checkout Area =================-->
+    </main>
+  {% endblock %}

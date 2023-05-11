@@ -1,0 +1,26 @@
+{% extends 'admin/admin_base.html' %}
+{% load static %}
+{% block 'content' %}
+<div class="page-wrapper">
+    <form action="{% url 'sales_report' %}" method="GET">
+        <div class="row d-flex justify-content-center align-items-center">
+
+            <div class="col-4">
+                <label for="start_date">Start Date</label>
+                <input type="date" class="form-control" name="start_date" placeholder="start date" />
+            </div>
+            <div class="col-4">
+                <label for="end_date">End Date</label>
+                <input type="date" class="form-control" name="end_date" placeholder="end date" />
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-success">Report</button>
+                
+            </div>
+        </div>
+        
+
+    </form>
+    
+</div>
+{% endblock %}

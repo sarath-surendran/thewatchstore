@@ -1,0 +1,37 @@
+from django.urls import path,include
+from . import views
+
+urlpatterns = [
+    path('',views.admin),
+    path('login/',views.admin_login,name="admin_login"),
+    path('dashboard/',views.admin_dashboard,name="admin_dashboard"),
+    path('dashboard/profile',views.admin_profile,name="admin_profile"),
+    path('dashboard/user_management/',views.user_management,name="admin_user_management"),
+    path('dashboard/user_management/block_user/',views.block_user,name="block_user"),
+    path('dashboard/user_management/delete_user/',views.delete_user,name="delete_user"),
+    path('dashboard/user_management/make_admin/',views.make_admin,name="make_admin"),
+    path('dashboard/product_management/',include('products.urls')),
+    path('dashboard/category_management/',include('categories.urls')),
+    path('dashboard/order_management/',views.order_management,name="admin_order_management"),
+    path('dashboard/order_management/view_order/<int:order_number>',views.view_order,name="view_order"),
+    path('dashboard/order_management/change_status/<int:order_number>',views.change_status, name="change_status"),
+    path('dashboard/admin_sales',views.admin_sales,name="admin_sales"),
+    path('dashboard/admin_sales/sales_report',views.sales_report,name="sales_report"),
+    path('dashboard/product_offers',views.product_offers,name="product_offers"),
+    path('dashboard/product_offers/add_product_offer',views.add_product_offer,name="add_product_offer"),
+    # path('dashboard/product_offers/edit_product_offer',views.edit_product_offer,name="edit_product_offer"),
+    # path('dashboard/product_offers/edit_product_offer_save/<int:id>',views.edit_product_offer_save,name="edit_product_offer_save"),
+    path('dashboard/product_offers/delete_product_offer',views.delete_product_offer,name="delete_product_offer"),
+    path('dashboard/product_offers/change_offer_status',views.change_offer_status,name="change_offer_status"),
+    path('dashboard/category_offers',views.category_offers,name="category_offers"),
+    path('dashboard/category_offers/add_category_offer',views.add_category_offer,name="add_category_offer"),
+    # path('dashboard/category_offers/edit_category_offer',views.edit_category_offer,name="edit_category_offer"),
+    # path('dashboard/category_offers/edit_category_offer_save/<int:id>',views.edit_category_offer_save,name="edit_category_offer_save"),
+    path('dashboard/category_offers/delete_category_offer',views.delete_category_offer,name="delete_category_offer"),
+    path('dashboard/category_offers/change_catoffer_status',views.change_catoffer_status,name="change_catoffer_status"),
+    path('dashboard/coupons',views.coupons,name="coupons"),
+    path('dashboard/coupons/add_coupon',views.add_coupon,name="add_coupon"),
+    path('dashboard/coupons/delete_coupon',views.delete_coupon,name="delete_coupon"),
+    path('dashboard/coupons/change_coupon_status',views.change_coupon_status,name="change_coupon_status"),
+
+]  

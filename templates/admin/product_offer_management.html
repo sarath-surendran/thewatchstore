@@ -1,0 +1,154 @@
+{% extends 'admin/admin_base.html' %}
+{% load static %}
+{% block 'content' %}
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-8 align-self-center">
+                <h3 class="page-title mb-0 p-0">Products Offer Management</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Products Offer Management</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-6 col-4 align-self-center">
+                <div class="text-end upgrade-btn">
+                    <a href="{% url 'index' %}"
+                        class="btn btn-success d-none d-md-inline-block text-white" target="_blank">Go to Shop</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <a href="{% url 'add_product_offer' %}" class="btn btn-primary mx-4">Add Product Offer</a>
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <!-- column -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Products Offer Management</h4>
+                        <!-- <h6 class="card-subtitle">Add class <code>.table</code></h6> -->
+                        <div class="table-responsive">
+                            <table class="table user-table no-wrap">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0">#</th>
+                                        <th class="border-top-0">Product Name</th>
+                                        <th class="border-top-0">Offer Name</th>
+                                        <th class="border-top-0">Discount</th>
+                                        <th class="border-top-0">Status</th>
+                                        <th class="border-top-0">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for offer in offers %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{offer.product.name}}</td>
+                                        <td>{{offer.name}}</td>
+                                        <td>{{offer.discount}} %</td>
+                                        <td>
+                                            <!-- {% if offer.is_active %}
+                                                <a class="btn btn-success" href="">Active</a>
+                                            {% else %}
+                                                <a class="btn btn-danger" href="">Inactive</a>
+                                            {% endif %} -->
+                                            <button class="toggle-offer btn {% if offer.is_active %}btn-success{% else %}btn-danger{% endif %}"
+                                                data-id="{{ offer.id }}">
+                                                {% if offer.is_active %}Active{% else %}Inactive{% endif %}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-around">
+                                                <!-- <form action="" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="offer_id" value="{{offer.id}}">
+                                                    <button type="submit" class="btn btn-success">Edit</button>
+                                                </form> -->
+    
+                                                <form action="{% url 'delete_product_offer' %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="offer_id" value="{{offer.id}}">
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                       
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+
+    
+
+
+    {% endblock %}
+
+    {% block 'script' %}
+    <script>
+        $(document).ready(function () {
+            $('.toggle-offer').click(function () {
+                var offer_id = $(this).data('id');
+                var url = "{% url 'change_offer_status' %}";
+                var token = $("[name='csrfmiddlewaretoken']").val();
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: {id: offer_id, csrfmiddlewaretoken : token},
+                    success: function (response) {
+                        if (response.is_active) {
+                        $('.toggle-offer[data-id="' + offer_id + '"]')
+                            .removeClass('btn-danger')
+                            .addClass('btn-success')
+                            .text('Active');
+                    } else {
+                        $('.toggle-offer[data-id="' + offer_id + '"]')
+                            .removeClass('btn-success')
+                            .addClass('btn-danger')
+                            .text('Inactive');
+                    }
+                    }
+                });
+                
+            });
+        });
+    </script>
+    {% endblock%}

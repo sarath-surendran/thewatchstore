@@ -1,0 +1,31 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block 'content' %}
+ <div class="row d-flex align-items-center justify-content-center" >
+    
+    {% for address in addresses %}
+    <div class="col-8 pl-5 " style="background-color: #eee;">
+        <p>{{address.first_name}} {{address.last_name}} <br>
+            {{address.address_line_1}},<br>
+          {{address.address_line_2}},<br>
+          {{address.city}},<br>
+          {{address.state}},<br>
+          {{address.country}} - {{address.pincode}}
+
+          </p>
+        <a class="genric-btn success circle" href="{% url 'edit_address' address.id %}">Edit</a>
+        <a class="genric-btn danger circle" href="{% url 'delete_address' address.id %}">Delete</a>
+
+        <p></p>
+    </div>
+    
+    
+    {% endfor %}
+    
+ </div>
+ <div class="row d-flex align-items-center justify-content-center">
+  <a href="{% url 'add_address' %}?next=profile" class="btn_3">Add Address</a>
+
+ </div>
+
+{% endblock %}

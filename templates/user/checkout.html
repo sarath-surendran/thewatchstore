@@ -1,0 +1,171 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block 'content' %}
+    <main>
+       
+            <div class="billing_details">
+              <div class="row">
+                <div class="col-lg-8">
+                  <h3 class="text-heading pl-3 text-danger pb-0">Select Delivery Address</h3>
+                  <form action="{% url 'place_order' %}" method="post">
+                    {% csrf_token %}
+                    {% for address in addresses %}
+                  <div class="order_box">  
+                    <!-- <label for="address {{forloop.counter}}">
+                      <input type="radio" id="address{{forloop.counter}}" name="delivery address" value="{{address.id}}">
+                      {{address.first_name}} {{address.last_name}}<br>
+                      {{address.address_line_1}},<br>
+                      {{address.address_line_2}},<br>
+                      {{address.city}},<br>
+                      {{address.state}},<br>
+                      {{address.country}} - {{address.pincode}}
+                    </label> -->
+                    <div class="switch-wrap d-flex justify-content-start">
+                      
+                      <div class="primary-radio">
+                        <!-- <input type="checkbox" id="primary-radio" checked> -->
+                        <input type="radio" id="address{{forloop.counter}}" name="delivery address" value="{{address.id}}">
+
+                        <label for="address{{forloop.counter}}"></label>
+                      </div>
+                      <p>{{address.first_name}} {{address.last_name}} <br>
+                        {{address.address_line_1}},<br>
+                      {{address.address_line_2}},<br>
+                      {{address.city}},<br>
+                      {{address.state}},<br>
+                      {{address.country}} - {{address.pincode}}
+
+                      </p>
+                    </div>
+                  </div>
+                    {% endfor %}
+                    <a href="{% url 'add_address' %}?next=checkout" class="btn_3">Add Address</a>
+                  
+                </div>
+                <div class="col-lg-4">
+                  <div class="order_box">
+                    <h2>Your Order</h2>
+                    <ul class="list">
+                      <li>
+                        <a href="#">Product
+                          <span>Total</span>
+                        </a>
+                      </li>
+                      {% for cart_item in cart_items %}
+                      <li>
+                        <a href="#">{{cart_item.product.name}}<br>
+                          <span class="middle">x {{cart_item.quantity}}</span>
+                          <span class="last">&#8377; {{cart_item.product_total}}</span>
+                        </a>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                    <ul class="list list_2">
+                      <li>
+                        <a href="#">Subtotal
+                          <span>&#8377; {{total}}</span>
+                        </a>
+                      </li>
+                      <li>
+                      
+                        <a href="#">Delivery
+                          {% if referal_discount > 0 %}
+                            <span> Free</span>
+                          {% else %}
+                            <span>&#8377; 40</span>
+                          {% endif %}
+                        </a>
+                      </li>
+                      {% if referal_count > 0 %}
+                      <li>
+                        <a href="#">Referal Discount
+                          <span id="total_price">&#8377; {{referal_discount}}</span>
+                        </a>
+                      </li>
+                      <li>
+                      {% endif %}
+                      <li id="coupon_list" style="display: none;">
+                        <a href="#">Coupon Discount
+                          <span id="discount">&#8377; </span>
+                        </a>
+                        <a href="#" id="remove_coupon" style="color: red;">(Remove Coupon)</a>
+                      </li>
+                      <li>
+                        <a href="#">Total
+                          <span id="total_price">&#8377; {{grand_total}}</span>
+                        </a>
+                      </li>
+                      {% if referal_count == 0 %}
+                        <li>
+                        <a href="" style="color: red;" id="apply-coupon-link">Apply Coupon</a>
+                        <!-- <div id="coupon-box" style="display: none;">
+
+                        </div> -->
+                          <div class="d-flex justify-content-start">
+                            <input type="text" name="coupon" style="display: none;" id="coupon_input">
+                            <button style="display: none;" id="coupon_submit">Apply Coupon</button>
+                          </div>
+                          <div id="coupon-applied-message" style="display: none; color: blue;">
+                            Coupon Applied!
+                            <button style="display: none;" id="coupon_submit">Remove Coupon</button>
+                          </div>
+                          
+
+                          <div id="invalid-coupon-message" style="display: none; color: red;">
+                            Invalid Coupon!
+                          </div>
+                        </li>
+                      {% endif %}
+                    </ul>
+                    <!-- <div class="payment_item">
+                      <div class="radion_btn">
+                        <input type="radio" id="f-option5" name="selector" />
+                        <label for="f-option5">Check payments</label>
+                        <div class="check"></div>
+                      </div>
+                      <p>
+                        Please send a check to Store Name, Store Street, Store Town,
+                        Store State / County, Store Postcode.
+                      </p>
+                    </div>
+                    <div class="payment_item active">
+                      <div class="radion_btn">
+                        <input type="radio" id="f-option6" name="selector" />
+                        <label for="f-option6">Paypal </label>
+                        <img src="img/product/single-product/card.jpg" alt="" />
+                        <div class="check"></div>
+                      </div>
+                      <p>
+                        Please send a check to Store Name, Store Street, Store Town,
+                        Store State / County, Store Postcode.
+                      </p>
+                    </div>
+                    <div class="creat_account">
+                      <input type="checkbox" id="f-option4" name="selector" />
+                      <label for="f-option4">I’ve read and accept the </label>
+                      <a href="#">terms & conditions*</a>
+                    </div> -->
+                    
+                    
+                    <!-- <a class="btn_3" href="#">Proceed to Payment</a> -->
+                    <button class="genric-btn info-border" type="submit">Pay On Delivery</button>
+                    <button class="genric-btn info-border mt-2 paywithRazorPay" type="submit">Pay On Razor Pay</button>
+                  </div>
+                </form>
+                <!-- <div id="paypal-button-container">
+                  
+                  Paypal button
+                </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!--================End Checkout Area =================-->
+    </main>
+    
+  {% endblock 'content' %}
+
+  {% block 'script' %}
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  {% endblock 'script' %}

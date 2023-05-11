@@ -1,0 +1,74 @@
+{% extends 'admin/admin_base.html' %}
+{% load static %}
+{% block 'content' %}
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-8 align-self-center">
+                <h3 class="page-title mb-0 p-0">Products</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Products</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    
+        <div class="container-fluid">
+           <form action="{% url 'admin_add_product' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label for="product_name">Product Name</label>
+                {{productform.name}}
+            </div>
+            <div>
+                <label for="image">Image</label>
+                {{productform.image}}
+            </div>
+            <div>
+                <label for="brand">Brand</label>
+                {{productform.brand}}
+            </div>
+            <div>
+                <label for="mrp">MRP</label>
+                {{productform.mrp}}
+            </div>
+            <div>
+                <label for="selling_price">Selling Price</label>
+                {{productform.selling_price}}
+            </div>
+            <div>
+                <label for="quantity">Quantity</label>
+                {{productform.quantity}}
+            </div>
+            <div>
+                <label for="is_availiable">Avaliability</label>
+                {{productform.is_avaliable}}
+            </div>
+            <div>
+                <label for="category_name">Categories</label>
+                {{productform.categories}}
+            </div>
+            <div>
+                <label for="variation_value">Variations</label>
+
+                {{variationform.variation_value}}
+            </div>
+            <button class="btn btn-primary">Submit</button>
+           </form>
+        </div>
+    
+    
+    {% endblock %}
+        

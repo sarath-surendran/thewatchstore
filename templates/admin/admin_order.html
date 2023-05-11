@@ -1,0 +1,135 @@
+{% extends 'admin/admin_base.html' %}
+{% load static %}
+{% block 'content' %}
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-8 align-self-center">
+                <h3 class="page-title mb-0 p-0">Orders</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Orders</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-6 col-4 align-self-center">
+                <div class="text-end upgrade-btn">
+                    <a href="{% url 'index' %}"
+                        class="btn btn-success d-none d-md-inline-block text-white" target="_blank">Go to Shop</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <!-- column -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Orders</h4>
+                        <!-- <h6 class="card-subtitle">Add class <code>.table</code></h6> -->
+                        <div class="table-responsive">
+                            <table class="table user-table no-wrap">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0">#</th>
+                                        <th class="border-top-0">Order Number</th>
+                                        <th class="border-top-0">User</th>
+                                        <th class="border-top-0">Order Total</th>
+                                        <th class="border-top-0">Status</th>
+                                        <th class="border-top-0"></th>
+                                        <th class="border-top-0">Actions</th>
+                                        
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{order.order_number}}</td>
+                                        <td>{{order.user.first_name}}</td>
+                                        <td>{{order.order_total}}</td>
+                                        <td>
+                                            <div class="row">
+                                            <form action="{% url 'change_status' order.order_number %}" method="POST">
+                                                {% csrf_token %}
+                                                
+                                                    
+                                                    <select class="form-select form-select-sm form-group px-3" name='status'
+                                                        aria-label="Default select example">
+                                                        <option value="{{ order.status}}">{{order.status}}</option>
+                                                        {% for choice in status_choices %}
+                
+                                                        {% if choice.0 != order.status %}
+                                                        <option value="{{ choice.0 }}">{{ choice.0 }}</option>
+                                                        {% endif %}
+                
+                                                        {% endfor %}
+                                                    </select>
+                                                
+                                                
+                                                    <td>
+                                                        <button type="submit" class="btn btn-success">Save</button>
+
+                                                    </td>
+                                                
+                                            </form>
+                                        </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-around">
+                                                
+                                                <button type="submit" class="btn btn-success"><a href="{% url 'view_order' order.order_number %}" style="color: white;">View</a></button>
+    
+                                                <!-- <form action="" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="" value="">
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form> -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    {% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'admin/admin_base.html' %}
+{% load static %}
+{% block 'content' %}
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-8 align-self-center">
+                <h3 class="page-title mb-0 p-0">Users</h3>
+                <div class="d-flex align-items-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Users</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-6 col-4 align-self-center">
+                <div class="text-end upgrade-btn">
+                    <a href="{% url 'index' %}"
+                        class="btn btn-success d-none d-md-inline-block text-white" target="_blank">Go to Shop</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <!-- column -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Users</h4>
+                        <!-- <h6 class="card-subtitle">Add class <code>.table</code></h6> -->
+                        <div class="table-responsive">
+                            <table class="table user-table no-wrap">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0">#</th>
+                                        <!-- <th class="border-top-0">Image</th> -->
+                                        <th class="border-top-0">First Name</th>
+                                        <th class="border-top-0">Last Name</th>
+                                        <th class="border-top-0">Email</th>
+                                        <th class="border-top-0">Phone</th>
+                                        <th class="border-top-0">Access Level</th>
+                                        <th class="border-top-0">Status</th>
+                                        <th class="border-top-0">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <!-- <td><img src="{{user.image.url}}" alt="{{user.first_name}}"></td> -->
+                                        <td>{{user.first_name}}</td>
+                                        <td>{{user.last_name}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.phone}}</td>
+                                        {%if user.is_superuser%}
+                                        <td style="color: red;">Admin</td>
+                                        {% else %}
+                                        <td style="color: blue;">User</td>
+                                        {% endif %}
+                                        {% if user.is_verified %}
+                                        <td>Email Verified</td>
+                                        {% else %}
+                                        <td>Not Verified</td>
+                                        {% endif %}
+                                        <td>
+                                            <div class="d-flex justify-content-between">
+                                                <form action="{% url 'block_user' %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="user_id" value="{{user.id}}">
+                                                    {% if user.is_active %}
+                                                    <button type="submit" class="btn btn-primary text-white">Block</button>
+                                                    {% else %}
+                                                    <button type="submit" class="btn btn-primary text-white">Unblock</button>
+                                                    {% endif %}
+                                                </form>
+                                                <form action="{% url 'delete_user' %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="user_id" value="{{user.id}}">
+                                                    <button type="submit" class="btn btn-danger text-white">Delete</button>
+                                                </form>
+                                                <form action="{% url 'make_admin' %}" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="user_id" value="{{user.id}}">
+                                                    {% if user.is_superuser %}
+                                                    <button type="submit" class="btn btn-success text-white">Make User</button>
+                                                    {% else %}
+                                                    <button type="submit" class="btn btn-success text-white">Make Admin</button>
+                                                    {% endif %}
+                                                </form>
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    {% endblock %}

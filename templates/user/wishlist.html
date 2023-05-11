@@ -1,0 +1,69 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% block 'content' %}
+  
+<main>
+     
+      <!--================Cart Area =================-->
+      {% if not wish_items %}
+      <div class="card">
+        <h2 class="text-center">Your Wishlist is Empty.</h2><br><br>
+        <div class="text-center">
+          <a href="{% url 'index' %}" class="btn">Continue Shopping</a>
+        </div>
+      </div>
+      {% else %}
+      <section class="cart_area section_padding">
+        <div class="container">
+          <div class="cart_inner">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    
+                    
+                    
+                    <th scope="col">Action</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for wish_item in wish_items %}
+                  <tr>
+                    <td>
+                      <div class="media">
+                        <div class="d-flex">
+                          <img src="{{ wish_item.product.image.url }}" alt="{{wish_item.product.name}}" />
+                        </div>
+                        <div class="media-body">
+                          <p>{{wish_item.product.name}}</p>
+                          {% if wish_item.variations.all%}
+                            {% for item in wish_item.variations.all %}
+                              <p>Strap Meterial : {{item.variation_value}}</p>
+                            {% endfor %}
+                          {% endif %}
+                        </div>
+                      </div>
+                    </td>
+                   
+                    
+                    <td><a href="{% url 'product_detail' wish_item.product.id %}" class="genric-btn primary radius">Add to Cart</a>
+                      <a href="{% url 'remove_wishlist' wish_item.product.id wish_item.id %}" class="genric-btn danger radius">Remove</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+              <!-- <div class="checkout_btn_inner float-right">
+                <a class="btn_1" href="{% url 'index' %}">Continue Shopping</a>
+                <a class="btn_1 checkout_btn_1" href="{% url 'checkout' %}">Proceed to checkout</a>
+              </div> -->
+            </div>
+          </div>
+      </section>
+      {% endif %}
+      <!--================End Cart Area =================-->
+  </main>>
+  {% endblock %}
