@@ -4,6 +4,7 @@ from categories.models import Category
 # Create your models here.
 class Product(models.Model):
     name = models.CharField(max_length=200, blank=False, unique=True)
+    description = models.TextField(max_length=500,blank=True,null=True)
     mrp = models.IntegerField(blank=False)
     selling_price = models.FloatField(blank=False)
     brand = models.CharField(max_length=200)

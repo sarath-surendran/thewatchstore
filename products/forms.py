@@ -8,7 +8,7 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name','mrp','selling_price','brand','quantity','image','categories','is_avaliable',]
+        fields = ['name','description','mrp','selling_price','brand','quantity','image','categories','is_avaliable',]
 
 
 class VariationForm(forms.ModelForm):

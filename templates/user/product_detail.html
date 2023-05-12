@@ -22,8 +22,9 @@
                             </div>
                             
                             
-                            
-                            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+                            {% if product.description %}
+                                <p class="lead">{{product.description}}</p>
+                            {% endif %}
                             <div class="default-select">
                                 <h6>Choose strap material</h6>
                                 <select name="strap" required >
